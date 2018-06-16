@@ -115,9 +115,6 @@ class TcpSourceSink(SourceSink):
                 if not header_bytes:
                     self.sock.close()
                     self.sock = None
-                    if self.is_server:
-                        self.server_sock.close()
-                        self.server_sock = None
                     return False
             bytes_to_read = self.tcp_header.get_message_size(header_bytes)
             bytes_read = 0
@@ -131,9 +128,6 @@ class TcpSourceSink(SourceSink):
                 if not tmp_data:
                     self.sock.close()
                     self.sock = None
-                    if self.is_server:
-                        self.server_sock.close()
-                        self.server_sock = None
                     return False
                 else:
                     bytes_read += len(tmp_data)
@@ -154,7 +148,17 @@ class TcpSourceSink(SourceSink):
         self.initialize()
         while not self.stopped.is_set():
             if not self.get_next_item():
-                self.initialize()
+                if not self.is_server:
+                    self.initialize()
+                else:
+                    while not self.stopped.is_set():
+                        try:
+                            self.sock, addr = self.server_sock.accept()
+                            hydra_logger.info(
+                                '%s: New TCP connection from: %s' % (self.name, addr))
+                            break
+                        except socket.timeout:
+                            pass
 
     def notify(self, publisher, item):
         if not self.sock is None:
