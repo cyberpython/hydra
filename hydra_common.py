@@ -42,7 +42,7 @@ class ActiveQueueNode(IntermediateNode, threading.Thread, Stoppable):
         self.queue = Queue()
 
     def notify(self, publisher, item):
-        hydra_logger.debug('Queue %s - put: %s' % (self.name, item.decode('utf-8')) )
+        hydra_logger.debug('Queue %s - put: %s' % (self.name, str(item)) )
         self.queue.put(item)
 
     def run(self):
@@ -51,7 +51,7 @@ class ActiveQueueNode(IntermediateNode, threading.Thread, Stoppable):
             hydra_logger.debug('Queue %s - retrieving...' % (self.name) )
             try:
                 item = self.queue.get(timeout=1.0)
-                hydra_logger.debug('Queue %s - got: %s' % (self.name, item.decode('utf-8')) )
+                hydra_logger.debug('Queue %s - got: %s' % (self.name, str(item)) )
                 self.notify_all(item)
             except Empty:
                 pass
