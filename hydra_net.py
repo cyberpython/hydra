@@ -149,6 +149,12 @@ class TcpSourceSink(SourceSink):
             return True
         except socket.timeout:
             return True
+    
+    def run(self):
+        self.initialize()
+        while not self.stopped.is_set():
+            if not self.get_next_item():
+                self.initialize()
 
     def notify(self, publisher, item):
         if not self.sock is None:
