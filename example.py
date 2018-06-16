@@ -29,6 +29,7 @@ also contains a logging node that logs all the incoming message data.
 from hydra_core import Graph
 from hydra_common import ActiveQueueNode, LoggerNode
 from hydra_net import UdpSourceSink, TcpSourceSink, BaseTcpHeader
+from hydra_rest import RestService
 import time
 import logging
 import struct
@@ -72,6 +73,9 @@ if __name__ == '__main__':
   queue1 = ActiveQueueNode('Queue #1')
   src1.add_subscriber(queue1)
 
+  src2 = RestService('REST source #1', host='0.0.0.0', port=5002)
+  src2.add_subscriber(queue1)
+
   # Create a UDP sink that sends to 127.0.0.1:6544 and connect it to the queue:
   sink1 = UdpSourceSink('UDP Sink #1', 1024, send_to_ip='127.0.0.1', send_to_port=6544)
   queue1.add_subscriber(sink1)
@@ -82,6 +86,7 @@ if __name__ == '__main__':
   
   # Add all the nodes to the graph:
   g.add(src1)
+  g.add(src2)
   g.add(queue1)
   g.add(sink1)
   g.add(log1)
