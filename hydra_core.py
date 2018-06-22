@@ -36,6 +36,16 @@ There are four kinds of nodes in each graph:
 - Intermediate nodes: Nodes which are both consuming (subscribers) and 
   publishing data at the same time. Such nodes can be used for various purposes
   such as buffering, examining, transforming, filtering data etc.
+
+**WARNING**: Care must be taken when connecting multiple publishers to the same
+             subscriber since in this case the subscribing node must implement a
+             thread safe notify() method. If this is the case it must be noted 
+             in the subscriber's doc comments, otherwise it is assumed that the
+             notify() method is not thread safe and the node should not be 
+             connected to more than one publisher. In this case one can use 
+             a hydra_common.ActiveQueueNode, which is an essence a node that
+             contains a thread-safe queue, as a man-in-the-middle to synchronize
+             the access to the subscriber.
 '''
 
 

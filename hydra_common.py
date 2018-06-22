@@ -33,6 +33,8 @@ class ActiveQueueNode(IntermediateNode, threading.Thread, Stoppable):
 
     The node is "active", in the sense that it run its own thread that retrieves
     items from the queue and passes them to subscribers.
+    
+    The notify() method is thread-safe.
     '''
 
     def __init__(self, name):

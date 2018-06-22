@@ -94,6 +94,8 @@ class TcpSourceSink(SourceSink):
                     break
                 except socket.timeout:
                     pass
+                except OSError:
+                    pass
         else:
             self.sock = socket.socket(socket.AF_INET,
                                       socket.SOCK_STREAM)
@@ -106,9 +108,12 @@ class TcpSourceSink(SourceSink):
                     break
                 except socket.timeout:
                     pass
+                except OSError:
+                    pass
 
     def get_next_item(self):
         try:
+            self.sock.settimeout(self.sock_timeout)  # restore the timeout
             header_bytes = b''
             if self.tcp_header.header_length > 0:
                 header_bytes = self.sock.recv(self.tcp_header.header_length)
@@ -143,6 +148,10 @@ class TcpSourceSink(SourceSink):
             return True
         except socket.timeout:
             return True
+        except ConnectionError:
+            self.sock.close()
+            self.sock = None
+            return False
     
     def run(self):
         self.initialize()
