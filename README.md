@@ -1,5 +1,5 @@
-Hydra
-=====
+Hydra Framework
+===============
 
 
 Description
@@ -32,7 +32,15 @@ The available classes are broken down to the following modules:
 - `hydra_core`: Contains the basic classes from which graphs are built.
 - `hydra_common`: Classes for commonly used node types (e.g. queues).
 - `hydra_net`: TCP and UDP SourceSinks.
+- `hydra_rest`: REST API endpoint node (uses `Flask` and its built-in 
+                development server).
 
+Installation
+------------
+
+Install with `pip`:
+
+    pip install hydra-framework
 
 Examples
 --------
@@ -43,15 +51,17 @@ See `example.py`.
 TODO
 ----
 
-Implement the following modules:
-- `hydra_web`: Module that provides REST and websocket sinks and sources.
-- `hydra_gui_qt5`: Module that provides GUI components for QT5 (Python for QT).
+- Implement the following modules:
+  + `hydra_websocket`: Module that provides REST and websocket sinks and sources.
+  + `hydra_gui_qt5`: Module that provides GUI components for QT5 (Python for QT).
+- Add a REST client node implementation based on the `requests` module.
 
 
 Requirements
 ------------
 
-Python 3.x
+- Python 3.x
+- Flask (for hydra-rest)
 
 
 License
