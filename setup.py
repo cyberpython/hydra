@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="hydra_framework",
-    version="0.2.1",
+    version="0.2.2",
     author="George Migdos",
     author_email="cyberpython@gmail.com",
     description="Python framework that provides the basic building blocks to implement data processing graphs.",
