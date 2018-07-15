@@ -24,7 +24,7 @@
 '''
 
 import socket
-from hydra_core import SourceSink, hydra_logger
+from hydra_framework.hydra_core import SourceSink, hydra_logger
 
 
 class BaseTcpHeader:

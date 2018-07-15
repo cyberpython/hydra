@@ -25,9 +25,8 @@
 '''
 
 from flask import Flask, request
-from hydra_core import Source
+from hydra_framework.hydra_core import Source
 from queue import Queue, Empty
-# from multiprocessing import Process, Queue
 from threading import Thread
 
 class RestService(Source):
@@ -48,28 +47,15 @@ class RestService(Source):
     self.port = port
     self.q = Queue()
     self.server_thread = None
-  
-  # def process_input(self):
-  #   try:
-  #     data = bytes(bytearray.fromhex(request.json['data'].replace(' ', '')))
-  #     self.q.put(data)
-  #     return '', 200
-  #   except:
-  #     return 'Invalid input', 400
-  
+   
   def initialize(self):
-    # self.app.add_url_rule("/", "index", self.process_input, methods=['POST'])
-    
+      
     args = {'host': self.host, 'port': self.port}
-    # self.server = Process(target=self.app.run, kwargs=args)
-    # self.server.start()
     self.server = Thread(target=self.app.run, kwargs=args, daemon=True)
     self.server.start()
 
   def stop(self):
-    # self.server.terminate()
     super(RestService, self).stop()
-    # self.server.join()
     
   def get_next_item(self):
     try:

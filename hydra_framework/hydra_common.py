@@ -26,7 +26,7 @@
 import logging
 import threading
 from queue import Queue, Empty
-from hydra_core import IntermediateNode, Stoppable, Sink, hydra_logger
+from hydra_framework.hydra_core import IntermediateNode, Stoppable, Sink, hydra_logger
 
 class ActiveQueueNode(IntermediateNode, threading.Thread, Stoppable):
     '''Represents a node that stores items in a queue.

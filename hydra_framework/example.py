@@ -26,10 +26,10 @@ UDP sink. The goal is to receive a message from TCP and send it over UDP. It
 also contains a logging node that logs all the incoming message data.
 '''
 
-from hydra_core import Graph
-from hydra_common import ActiveQueueNode, LoggerNode
-from hydra_net import UdpSourceSink, TcpSourceSink, BaseTcpHeader
-from hydra_rest import RestService
+from hydra_framework.hydra_core import Graph
+from hydra_framework.hydra_common import ActiveQueueNode, LoggerNode
+from hydra_framework.hydra_net import UdpSourceSink, TcpSourceSink, BaseTcpHeader
+from hydra_framework.hydra_rest import RestService
 import time
 import logging
 import struct
